@@ -373,7 +373,20 @@ int containsList (struct linkedList *lst, TYPE e) {
     assert(lst != 0);
     assert(!isEmptyList(lst));
     
-    return _containsListRecursive((lst->firstLink)->next, e);
+    struct DLink *current = lst->firstLink;
+    
+    while (current->next != lst->lastLink) {
+        current = current->next;
+        
+        if (current->value == e)
+            return 1;
+    }
+    
+    printf("Could not remove %d from list, as it is not in the list.", e);
+    
+    return 0;
+    
+    //return _containsListRecursive((lst->firstLink)->next, e);
 }
 
 /*	Removes the first occurrence of the specified value from the collection
@@ -390,18 +403,18 @@ void removeList (struct linkedList *lst, TYPE e) { // --------------FIX
 
     //enforce preconditions
     assert(lst != 0);
-    assert(lst->firstLink != 0);
+    assert(lst->size != 0);
     
     struct DLink *current = lst->firstLink;
     
-    do {
+    while (current->next != lst->lastLink) {    //dont want the sentinels
+        
+        current = current->next;
         
         if (current->value == e) {
             _removeLink(lst, current);
             break;
         }
         
-        current = current->next;
-        
-    } while (current != 0);
+    }
 }

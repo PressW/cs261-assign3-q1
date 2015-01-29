@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
     
     
 
-    printf("\nNow testing addList(), containsList(), removeList() and printList()");
+    printf("\nNow testing addList(), containsList(), removeList() and printList()\n");
     printf("Adding 1, 2, 3, 4, and 5 to the currently empty list ");
     printf("using addList()...\n");
     addList(l, 1);

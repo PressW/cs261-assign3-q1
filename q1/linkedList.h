@@ -17,6 +17,7 @@ struct linkedList;
 
 struct linkedList *createLinkedList();
 void deleteLinkedList(struct linkedList *lst);
+void printList(struct linkedList *lst);
 
 /* Deque Interface */
 int 	isEmptyList(struct linkedList *lst);

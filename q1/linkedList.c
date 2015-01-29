@@ -196,7 +196,7 @@ void deleteLinkedList(struct linkedList *lst)
 
 /* Function to print list
  Pre: lst is not null
- */
+*/
 void _printList(struct linkedList* lst) { // --------------DEBUG
 
     assert(lst != 0);
@@ -217,6 +217,14 @@ void _printList(struct linkedList* lst) { // --------------DEBUG
         }
     }
 
+}
+
+/*  Function to print list
+ calls internal function _printList()
+ Pre: lst is not null
+ */
+void printList(struct linkedList *lst) {
+    _printList(lst);
 }
 
 /* ************************************************************************

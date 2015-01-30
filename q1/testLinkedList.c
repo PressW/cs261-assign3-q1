@@ -123,6 +123,10 @@ int main(int argc, char* argv[]) {
     assertTrue(containsList(l, 5), "containsList(l, 5) == true");
     assertTrue(!containsList(l, 57), "containsList(l, 57) == false");
 
+    printf("\nCalling removeList(57, 1). The updated List:\n");
+    removeList(l, 57);
+    printList(l);
+    
     printf("\nCalling removeList(l, 3). The updated List:\n");
     removeList(l, 3);
     printList(l);

@@ -456,6 +456,8 @@ void removeList (struct linkedList *lst, TYPE e) {
     if (isEmptyList(lst))
         _gracefulExit("Passed empty linkedList to removeList", 17);
     
+    int removed = 0;
+    
     struct DLink *current = lst->firstLink;
     
     while (current->next != lst->lastLink) {    //dont want the sentinels
@@ -464,8 +466,10 @@ void removeList (struct linkedList *lst, TYPE e) {
         
         if (current->value == e) {
             _removeLink(lst, current);
+            removed = 1;
             break;
         }
-        
     }
+    if (!removed)
+        printf("The element: %d that you tried to remove does not exist in the linked list.\n", e);
 }

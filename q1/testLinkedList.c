@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < 500; i++) {
         removeBackList(l);
     }
-    printf("The list now should have 1000 elts with -499 @ front and 500 @ back\n");
+    printf("The list now should have 1000 elts with -500 @ front and 500 @ back\n");
     assertTrue(backList(l) == 500, "backList(l) == 500");
     assertTrue(frontList(l) == -500, "frontList(l) == -500");
     printf("Now removing the remaining 1000 elements from back of list.\n");

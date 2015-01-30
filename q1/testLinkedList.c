@@ -1,7 +1,25 @@
+/* testLinkedList.c
+ * cirListDeque testing file.
+ 
+ Authors:       Bret Lorimore & Preston Wipf
+ Date:          January 30, 2015
+ Description:   Tests deque ADT implemented with doubly linked list
+                uses assertTrue function from assignment 2 skeleton code
+**** */
+
 #include "linkedList.h"
 #include <stdio.h>
 #include <stdlib.h>
 
+/*	Testing function, takes predicate, and message and prints the message
+    and if the test passed or failed, ie if the predicate expression evaluated
+    to true or false. NOT WRITTEN BY ME - TAKEN FROM ASSIGNMENT 2 SKELETON CODE
+	param: 	char *message message to be printed out
+    param: 	int predicate, boolean encoded as int
+	pre:	*message is not null
+    pre:	predicate is a boolean encoded int
+	post:	none
+ */
 void assertTrue(int predicate, char *message)
 {
     printf("%s: ", message);

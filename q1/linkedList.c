@@ -1,3 +1,14 @@
+/* linkedList.c
+ * deque ADT linked list implementation file.
+ 
+ Authors:       Bret Lorimore & Preston Wipf
+ Date:          January 30, 2015
+ Description:   Implementation for a deque ADT using a doubly linked list
+                with front and back sentinels
+                ->  added one custom internal function _gracefulExit for printing
+                    error messages and exiting the program
+**** */
+
 #include "linkedList.h"
 #include <assert.h>
 #include <stdlib.h>
@@ -150,6 +161,22 @@ int _containsListRecursive(struct DLink *l, TYPE e) {
         return _containsListRecursive(l->next, e);
 }
 
+/* Prints custom error message and exits w/ custom error code
+ 
+	param: 	message     c str - error message
+	param: 	errorCode	integer error code
+	pre:	message is not null
+	post:	program has exited
+*/
+void _gracefulExit(char *message, int errorCode) {
+    
+    //pre-conditions
+    assert(message != 0);
+    
+    printf("Error: %s\nGoodbye.\n", message);
+    exit(errorCode);
+}
+
 /*
 	isEmptyList
 	param: lst the linkedList
@@ -158,6 +185,10 @@ int _containsListRecursive(struct DLink *l, TYPE e) {
 */
 int isEmptyList(struct linkedList *lst) {
 
+    //pre-conditions
+    if (lst == 0)
+        _gracefulExit("Passed null linkedList ptr to isEmptyLinkedList", 1);
+    
     int empty = (lst->size == 0) ? 1 : 0;
     
 	return empty;
@@ -188,7 +219,10 @@ void freeLinkedList(struct linkedList *lst)
 */
 void deleteLinkedList(struct linkedList *lst)
 {
-	assert (lst != 0);
+    //pre-conditions
+    if (lst == 0)
+        _gracefulExit("Passed null linkedList ptr to deleteEmptyLinkedList", 2);
+    
 	freeLinkedList(lst);
 	free(lst);
 }
@@ -241,8 +275,9 @@ void printList(struct linkedList *lst) {
 void addFrontList(struct linkedList *lst, TYPE e)
 {
 
-    //enforce preconditions
-    assert(lst != 0);
+    //pre-conditions
+    if (lst == 0)
+        _gracefulExit("Passed null linkedList ptr to addFrontList", 3);
     
     if (isEmptyList(lst))
         _addLinkBefore(lst, lst->lastLink, e);
@@ -260,8 +295,9 @@ void addFrontList(struct linkedList *lst, TYPE e)
 */
 void addBackList(struct linkedList *lst, TYPE e) {
   
-    //enforce preconditions
-    assert(lst != 0);
+    //pre-conditions
+    if (lst == 0)
+        _gracefulExit("Passed null linkedList ptr to addBackList", 4);
     
     //add same place whether or not list is empty
     _addLinkBefore(lst, lst->lastLink, e);
@@ -276,9 +312,12 @@ void addBackList(struct linkedList *lst, TYPE e) {
 */
 TYPE frontList (struct linkedList *lst) {
 	
-    //enforce preconditions
-    assert(lst != 0);
-    assert(!isEmptyList(lst));
+    //pre-conditions
+    if (lst == 0)
+        _gracefulExit("Passed null linkedList ptr to frontList", 5);
+
+    if (isEmptyList(lst))
+        _gracefulExit("Passed empty linkedList to frontList", 6);
     
     return ((lst->firstLink)->next)->value;
 }
@@ -292,9 +331,12 @@ TYPE frontList (struct linkedList *lst) {
 */
 TYPE backList(struct linkedList *lst)
 {
-    //enforce preconditions
-    assert(lst != 0);
-    assert(!isEmptyList(lst));
+    //pre-conditions
+    if (lst == 0)
+        _gracefulExit("Passed null linkedList ptr to backList", 7);
+    
+    if (isEmptyList(lst))
+        _gracefulExit("Passed empty linkedList to backList", 8);
     
     return ((lst->lastLink)->prev)->value;
 }
@@ -310,13 +352,14 @@ TYPE backList(struct linkedList *lst)
 */
 void removeFrontList(struct linkedList *lst) {
 
-    if (!isEmptyList(lst))
-        _removeLink(lst, (lst->firstLink)->next);
+    //pre-conditions
+    if (lst == 0)
+        _gracefulExit("Passed null linkedList ptr to removeFrontList", 9);
     
-    else {
-        printf("Tried to remove link from empty list! That's embarrasing... \n");
-        printf("I didn't kill the program on purpose. Now you get to go on a debugging adventure ;)\n");
-    }
+    if (isEmptyList(lst))
+        _gracefulExit("Passed empty linkedList to removeFrontList", 10);
+
+    _removeLink(lst, (lst->firstLink)->next);
 }
 
 /*
@@ -328,14 +371,14 @@ void removeFrontList(struct linkedList *lst) {
 */
 void removeBackList(struct linkedList *lst) {
     
-    if (!isEmptyList(lst))
-        _removeLink(lst, (lst->lastLink)->prev);
+    //pre-conditions
+    if (lst == 0)
+        _gracefulExit("Passed null linkedList ptr to removeBackList", 11);
     
-    else {
-        printf("Tried to remove link from empty list! That's embarrasing... \n");
-        printf("Whatever happens next, you are not expecting it.\n");
-    }
-	
+    if (isEmptyList(lst))
+        _gracefulExit("Passed empty linkedList to removeBackList", 12);
+    
+    _removeLink(lst, (lst->lastLink)->prev);
 }
 
 
@@ -352,6 +395,10 @@ void removeBackList(struct linkedList *lst) {
  */
 void addList(struct linkedList *lst, TYPE v)
 {
+    //pre-conditions
+    if (lst == 0)
+        _gracefulExit("Passed null linkedList ptr to addList", 13);
+    
     addFrontList(lst, v);
 
 }
@@ -369,9 +416,12 @@ void addList(struct linkedList *lst, TYPE v)
 */
 int containsList (struct linkedList *lst, TYPE e) {
 
-    //enforce preconditions
-    assert(lst != 0);
-    assert(!isEmptyList(lst));
+    //pre-conditions
+    if (lst == 0)
+        _gracefulExit("Passed null linkedList ptr to containsList", 14);
+    
+    if (isEmptyList(lst))
+        _gracefulExit("Passed empty linkedList to containsList", 15);
     
     struct DLink *current = lst->firstLink;
     
@@ -381,8 +431,6 @@ int containsList (struct linkedList *lst, TYPE e) {
         if (current->value == e)
             return 1;
     }
-    
-    printf("Could not remove %d from list, as it is not in the list.", e);
     
     return 0;
     
@@ -399,11 +447,14 @@ int containsList (struct linkedList *lst, TYPE e) {
 	post:	e has been removed
 	post:	size of the bag is reduced by 1
 */
-void removeList (struct linkedList *lst, TYPE e) { // --------------FIX
+void removeList (struct linkedList *lst, TYPE e) {
 
-    //enforce preconditions
-    assert(lst != 0);
-    assert(lst->size != 0);
+    //pre-conditions
+    if (lst == 0)
+        _gracefulExit("Passed null linkedList ptr to removeList", 16);
+    
+    if (isEmptyList(lst))
+        _gracefulExit("Passed empty linkedList to removeList", 17);
     
     struct DLink *current = lst->firstLink;
     
